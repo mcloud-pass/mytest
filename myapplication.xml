@@ -1,0 +1,20 @@
+<!--连接redis单机版,创建了一个JedisClientPool的bean，创建这个bean需要一个jedisPool属性，在下面-->
+	<bean class="cn.e3mall.common.jedis.JedisClientPool" id="jedisClientPool">
+		<property name="jedisPool" ref="jedisPool"></property>
+	</bean>
+	<!--JedisPool这个bean的构造方法需要多个参数-->
+	<bean class="redis.clients.jedis.JedisPool" id="jedisPool" >
+		<constructor-arg name="host" value="${redis.host}"></constructor-arg>
+		<constructor-arg name="port" value="${redis.port}"></constructor-arg>
+		<constructor-arg name="password" value="${redis.password}"></constructor-arg>
+		<constructor-arg name="timeout" value="${redis.timeout}"></constructor-arg>
+		<constructor-arg name="database" value="${redis.database}"></constructor-arg>
+		<constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
+	</bean>
+	<bean class="redis.clients.jedis.JedisPoolConfig" id="jedisPoolConfig">
+		<property name="maxIdle" value="${maxIdle}" />
+		<property name="maxTotal" value="${maxActive}" />
+		<property name="maxWaitMillis" value="${maxWait}" />
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<property name="blockWhenExhausted" value="${blockWhenExhausted}" />
+	</bean>
